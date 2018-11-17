@@ -1,18 +1,18 @@
 import json 
 from pprint import pprint
 
-rtypes = []
+# rtypes = []
 
-for x in data['entry']:
-	y = x['resource']['resourceType']
-	rtypes.append(y)
+# for x in data['entry']:
+# 	y = x['resource']['resourceType']
+# 	rtypes.append(y)
 
-rtypes = list(set(rtypes))
-rtypes.sort()
+# rtypes = list(set(rtypes))
+# rtypes.sort()
 
 #CarePlan
 def cPlan(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	uI = []
 	for x in data['entry']:
 		u = []
@@ -31,7 +31,7 @@ def cPlan(file):
 
 #Condition
 def condition(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	cI = []
 	for x in data['entry']:
 		c = []
@@ -44,10 +44,11 @@ def condition(file):
 			c1 = {"condition": c[0], "clinicalStatus":c[1], "verificationStatus": c[2], "assertedDate": c[3]}
 			c1 = json.dumps(c1)
 			cI.append(c1)
+	return cI
 
 #DiagnosticReport
 def dReport(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	dI = []
 	for x in data['entry']:
 		d = []
@@ -60,6 +61,7 @@ def dReport(file):
 			d1 = {"status": d[0], "document": d[1], "effectiveDateTime": d[2], "issued":d[3]}
 			d1 = json.dumps(d1)
 			dI.append(d)
+	return dI
 
 # #Claim
 # def claim(file):
