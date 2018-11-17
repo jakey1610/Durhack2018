@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang = "en">
+<head>
+	<!-- cdns go here -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<style>
+		#patient-accordion{display: none}
+    #patients{display: none}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script>
+    //click handlers for navbar
+		$(document).ready(function(){
+			$('#show-patients').click(function(){
+				$('#patients').show()
+        $('patient-accordion').hide()
+				$('#homepage-text').hide()
+			})
+		})
+    $(document).ready(function(){
+      $('.show-home').click(function(){
+        $('#patients').hide()
+        $('patient-accordion').hide()
+        $('#homepage-text').show()
+      })
+    })
+    $(document).ready(function(){
+      $('.patient_request').click(function(){
+        $('#patients').hide()
+        $('patient-accordion').show()
+      })
+    })
+
+
+	</script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand show-home" href="#" >TPP Patient Data</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active show-home"><a href="#">Home</a></li>
+      <li><a href="#" id = "show-patients">Patients</a></li>
+    </ul>
+   
+  </div>
+</nav>
+
+<div id = "homepage-text">
+
+<h1> This is the homepage </h1>
+
+</div>
+
+{% raw %}
+<!-- the patient data in a mustache js template -->
+<script id = "patient-template" type = "text/template">
+  <div class="panel-group" id="accordion">
+    {{#for loop}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+          Collapsible Group 1</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <table>
+          {{#inner for loop}}
+          <tr>
+          </tr>
+          {{/close inner for loop}}
+          </table>
+          </div>
+      </div>
+    </div>
+    {{/close for loop}}
+  </div>
+
+</script>
+
+{% endraw %}
+<div id = "patients">
+ <form class ="form-inline">
+    <input class = "form-control" type = "search" placeholder = "Patient Search" name = "searchText">
+    <button class ="btn" type = "submit"> Search </button>  
+  </form>
+</div>
+
+<div id = "patient-accordion">
+  <a href = '#' class = 'patient_request'> Patient Name </a>
+</div>
+</body>
+
+</html>
