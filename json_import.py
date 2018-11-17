@@ -68,12 +68,12 @@ for x in data['entry']:
 		print(json.dumps(pro)) """
 
 def Observation(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	obs1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		obs = {}
 		if y == 'Observation':
+			obs = {}
 			try:
 				obs['Name'] = x['resource']['code']['text'] #Name  -e.g. BMI
 			except:
@@ -86,8 +86,9 @@ def Observation(file):
 					obs['Value'] = x['resource']['valueCodeableConcept']['text']
 				except KeyError:
 					obs['Value'] = ('No Data')
-		json.dumps(obs)
-		obs1.append(obs)
+			json.dumps(obs)
+			obs1.append(obs)
+	print(obs1)
 	return obs1
 
 def Encounter(file):
@@ -95,8 +96,8 @@ def Encounter(file):
 	enc1 =[]
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		enc = {}
 		if y == 'Encounter':
+			enc = {}
 			if x['resource']['class']['code'] == 'outpatient':
 				enc['Encounter Type'] = 'outpatient'
 				try:
@@ -119,12 +120,12 @@ def Encounter(file):
 	return enc1
 
 def mRequest(file): #Medication Request
-	data = json.load(file)
+	data = json.load(open(file))
 	medreq1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		medreq = {}
 		if y == 'MedicationRequest':
+			medreq = {}
 			medreq['Type of Request'] = x['resource']['extension'][0]['valueCodeableConcept']['text'] #type of request 
 			medreq['Medicine'] = x['resource']['medicationCodeableConcept']['text'] #medicine
 			medreq['Date'] = x['resource']['authoredOn'] #date
@@ -137,8 +138,8 @@ def Goal(file):
 	goa1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		goa = {}
 		if y == 'Goal':
+			goa = {}
 			goa['Aim'] = x['resource']['description']['text'] #aim - e.g. less intake
 			goa['Progress'] = x['resource']['status'] #progress assessment 
 			json.dumps(goa)
@@ -151,18 +152,25 @@ def Procedure(file):
 	pro1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		pro = {}
 		if y == 'Procedure':
+			pro = {}
 			pro['Type'] = x['resource']['code']['text'] # type of procedure
 			try:
 				pro['Reason'] = x['resource']['reasonReference'][0]['display'] #reason for procedure
 			except KeyError:
 				pro['Reason'] = 'N/A'
 			pro['Status'] = x['resource']['status']
-			pro['Date'] = x['resource']['performedDateTime']
+			try:
+				pro['Date'] = x['resource']['performedDateTime']
+			except KeyError:
+				pro['Date'] = x['resource']['performedPeriod']
 			json.dumps(pro)
 			pro1.append(pro)
 	print(pro1)
 	return pro1
 
+Observation('/Users/Sami/Desktop/DurHack/test2.json')
+Encounter('/Users/Sami/Desktop/DurHack/test2.json')
+mRequest('/Users/Sami/Desktop/DurHack/test2.json')
+Goal('/Users/Sami/Desktop/DurHack/test2.json')
 Procedure('/Users/Sami/Desktop/DurHack/test2.json')
