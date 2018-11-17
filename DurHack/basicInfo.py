@@ -1,7 +1,7 @@
-def getJson():
-	import json
-	with open('Abbott701_Veronika555_74.json') as x:
-		data = json.load(x)
+import json
+
+def basicInfo(file):
+	data = json.load(file)
 	bI = []
 	for x in data['entry']:
 		b = []
