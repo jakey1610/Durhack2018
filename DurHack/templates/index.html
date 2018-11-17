@@ -36,7 +36,10 @@
       $('#searchBtn').click(function(){
         $.post('/patientSearch',{hello:"hello"},function(data,status){
         if(status == "success"){
-          
+          console.log(data[0])
+          var template = $("#patient-template").html()
+          var text = Mustache.render(template,data[0])
+          $('#patients').html(text)    
             }
         else{
             alert("Error: " +status);
@@ -73,7 +76,6 @@
 <!-- the patient data in a mustache js template -->
 <script id = "patient-template" type = "text/template">
   <div class="panel-group" id="accordion">
-    {{#for loop}}
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -83,16 +85,13 @@
       </div>
       <div id="collapse1" class="panel-collapse collapse in">
         <div class="panel-body">
-          <table>
-          {{#inner for loop}}
-          <tr>
-          </tr>
-          {{/close inner for loop}}
-          </table>
+          <p>
+            *{{race}}
+            *{{ethnicity}}
+          </p>
           </div>
       </div>
     </div>
-    {{/close for loop}}
   </div>
 
 </script>

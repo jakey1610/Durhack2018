@@ -1,7 +1,7 @@
 import json
 
 def basicInfo(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	bI = []
 	for x in data['entry']:
 		b = []
@@ -17,6 +17,5 @@ def basicInfo(file):
 			b.append(x['resource']['birthDate'])
 			b.append(x['resource']['address'][0]['line'])
 			b1 = {"race": b[0], "ethnicity": b[1], "city": b[2], "maidenNames": b[3], "birthSex": b[4], "name": b[5], "gender": b[6], "birthDate": b[7], "address": b[8]}
-			b1 = json.dumps(b1)
 			bI.append(b1)
 	return bI
