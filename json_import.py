@@ -86,8 +86,9 @@ def Observation(file):
 					obs['Value'] = x['resource']['valueCodeableConcept']['text']
 				except KeyError:
 					obs['Value'] = ('No Data')
-		json.dumps(obs)
-		obs1.append(obs)
+			json.dumps(obs)
+			obs1.append(obs)
+	print(obs1)
 	return obs1
 
 def Encounter(file):
@@ -119,7 +120,7 @@ def Encounter(file):
 	return enc1
 
 def mRequest(file): #Medication Request
-	data = json.load(file)
+	data = json.load(open(file))
 	medreq1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
@@ -169,3 +170,7 @@ def Procedure(file):
 	return pro1
 
 Observation('/Users/Sami/Desktop/DurHack/test2.json')
+Encounter('/Users/Sami/Desktop/DurHack/test2.json')
+mRequest('/Users/Sami/Desktop/DurHack/test2.json')
+Goal('/Users/Sami/Desktop/DurHack/test2.json')
+Procedure('/Users/Sami/Desktop/DurHack/test2.json')
