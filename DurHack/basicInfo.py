@@ -9,10 +9,10 @@ def basicInfo(file):
 		if y == "Patient":
 			b.append(x['resource']['extension'][0]['valueCodeableConcept']['coding'][0]['display'])
 			b.append(x['resource']['extension'][1]['valueCodeableConcept']['coding'][0]['display'])
-			b.append(x['resource']['extension'][2]['valueAddress'])
+			b.append(x['resource']['extension'][2]['valueAddress']['city'] + x['resource']['extension'][2]['valueAddress']['state'] + x['resource']['extension'][2]['valueAddress']['country'])
 			b.append(x['resource']['extension'][3]['valueString'])
 			b.append(x['resource']['extension'][4]['valueCode'])
-			b.append(x['resource']['name'][0])
+			b.append(x['resource']['name'][0]['family'] + x['resource']['name'][0]['given'][0])
 			b.append(x['resource']['gender'])
 			b.append(x['resource']['birthDate'])
 			b.append(x['resource']['address'][0]['line'])
