@@ -36,9 +36,19 @@
       $('#searchBtn').click(function(){
         $.post('/patientSearch',{hello:"hello"},function(data,status){
         if(status == "success"){
-          console.log(data[0])
+          jsonData = data[0]
+          //get array of keys
+          var keyVals = []
+          for(var k in jsonData){
+            var pair = {}
+            pair["key"] = k
+            pair["val"] = jsonData[k]
+            keyVals.push(pair)
+          }
+          newJson = {"keyvals":keyVals}
+          console.log(newJson)
           var template = $("#patient-template").html()
-          var text = Mustache.render(template,data[0])
+          var text = Mustache.render(template,newJson)
           $('#patients').html(text)    
             }
         else{
@@ -86,8 +96,14 @@
       <div id="collapse1" class="panel-collapse collapse in">
         <div class="panel-body">
           <p>
-            *{{race}}
-            *{{ethnicity}}
+            <table class = table rules ="all">
+              {{#keyvals}}
+              <tr>
+              <td>{{key}}</td>
+              <td>{{val}}</td>
+              </tr>
+              {{/keyvals}}
+          </table>
           </p>
           </div>
       </div>
