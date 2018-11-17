@@ -165,4 +165,4 @@ def Procedure(file):
 	print(pro1)
 	return pro1
 
-Encounter('/Users/Sami/Desktop/DurHack/test2.json')
+Procedure('/Users/Sami/Desktop/DurHack/test2.json')
