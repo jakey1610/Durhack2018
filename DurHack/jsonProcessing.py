@@ -23,7 +23,6 @@ def cPlan(file):
 			u.append(x['resource']['status'])
 			u.append(x['resource']['activity'])
 			u1 = {"condition": u[0], "status": u[1], "activities":u[2]}
-			u1 = json.dumps(u1)
 			uI.append(u1)
 	return uI
 
@@ -42,7 +41,7 @@ def condition(file):
 			c.append(x['resource']['verificationStatus'])
 			c.append(x['resource']['assertedDate'])
 			c1 = {"condition": c[0], "clinicalStatus":c[1], "verificationStatus": c[2], "assertedDate": c[3]}
-			c1 = json.dumps(c1)
+
 			cI.append(c1)
 	return cI
 
@@ -59,7 +58,7 @@ def dReport(file):
 			d.append(x['resource']['effectiveDateTime'])
 			d.append(x['resource']['issued'])
 			d1 = {"status": d[0], "document": d[1], "effectiveDateTime": d[2], "issued":d[3]}
-			d1 = json.dumps(d1)
+
 			dI.append(d)
 	return dI
 
