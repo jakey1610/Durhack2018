@@ -159,7 +159,10 @@ def Procedure(file):
 			except KeyError:
 				pro['Reason'] = 'N/A'
 			pro['Status'] = x['resource']['status']
-			pro['Date'] = x['resource']['performedDateTime']
+			try:
+				pro['Date'] = x['resource']['performedDateTime']
+			except KeyError:
+				pro['Date'] = x['resource']['performedPeriod']
 			json.dumps(pro)
 			pro1.append(pro)
 	print(pro1)
