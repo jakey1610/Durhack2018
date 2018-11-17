@@ -91,7 +91,7 @@ def Observation(file):
 	return obs1
 
 def Encounter(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	enc1 =[]
 	for x in data['entry']:
 		y = x['resource']['resourceType']
@@ -100,7 +100,7 @@ def Encounter(file):
 			if x['resource']['class']['code'] == 'outpatient':
 				enc['Encounter Type'] = 'outpatient'
 				try:
-					enc['Date'] = x['resource']['class']['period']['start']
+					enc['Date'] = x['resource']['period']['start']
 				except KeyError:
 					enc['Date'] = 'No Date'
 			else:
@@ -115,6 +115,7 @@ def Encounter(file):
 				enc['Date'] = x['resource']['period']['start']
 			json.dumps(enc)
 			enc1.append(enc)
+	print(enc1)
 	return enc1
 
 def mRequest(file): #Medication Request
@@ -164,4 +165,4 @@ def Procedure(file):
 	print(pro1)
 	return pro1
 
-Goal('/Users/Sami/Desktop/DurHack/test2.json')
+Encounter('/Users/Sami/Desktop/DurHack/test2.json')
