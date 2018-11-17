@@ -68,12 +68,12 @@ for x in data['entry']:
 		print(json.dumps(pro)) """
 
 def Observation(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	obs1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		obs = {}
 		if y == 'Observation':
+			obs = {}
 			try:
 				obs['Name'] = x['resource']['code']['text'] #Name  -e.g. BMI
 			except:
@@ -95,8 +95,8 @@ def Encounter(file):
 	enc1 =[]
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		enc = {}
 		if y == 'Encounter':
+			enc = {}
 			if x['resource']['class']['code'] == 'outpatient':
 				enc['Encounter Type'] = 'outpatient'
 				try:
@@ -123,8 +123,8 @@ def mRequest(file): #Medication Request
 	medreq1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		medreq = {}
 		if y == 'MedicationRequest':
+			medreq = {}
 			medreq['Type of Request'] = x['resource']['extension'][0]['valueCodeableConcept']['text'] #type of request 
 			medreq['Medicine'] = x['resource']['medicationCodeableConcept']['text'] #medicine
 			medreq['Date'] = x['resource']['authoredOn'] #date
@@ -137,8 +137,8 @@ def Goal(file):
 	goa1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		goa = {}
 		if y == 'Goal':
+			goa = {}
 			goa['Aim'] = x['resource']['description']['text'] #aim - e.g. less intake
 			goa['Progress'] = x['resource']['status'] #progress assessment 
 			json.dumps(goa)
@@ -151,8 +151,8 @@ def Procedure(file):
 	pro1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
-		pro = {}
 		if y == 'Procedure':
+			pro = {}
 			pro['Type'] = x['resource']['code']['text'] # type of procedure
 			try:
 				pro['Reason'] = x['resource']['reasonReference'][0]['display'] #reason for procedure
@@ -168,4 +168,4 @@ def Procedure(file):
 	print(pro1)
 	return pro1
 
-Procedure('/Users/Sami/Desktop/DurHack/test2.json')
+Observation('/Users/Sami/Desktop/DurHack/test2.json')
