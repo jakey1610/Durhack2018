@@ -6,10 +6,9 @@ freq = {}
 xcoords = []
 ycoords = []
 
-for file in os.listdir('/Users/Sami/Desktop/fhir'):
+for file in os.listdir('C:/Users/Jake Mortimer/Downloads/fhir'):
 	if '.json' in file:
-		print(file)
-		data = json.load(open('/Users/Sami/Desktop/fhir/' + file))
+		data = json.load(open('C:/Users/Jake Mortimer/Downloads/fhir/' + file))
 
 		age = file.split('_')[2].split('.')[0]
 		for x in data['entry']:
@@ -25,4 +24,5 @@ for i in freq.keys():
 	xcoords.append(float(i))
 	ycoords.append(float(freq[i]))
 
-plt.plot(xcoords, ycoords)
+plt.plot(xcoords, ycoords, 'ro')
+plt.show()
