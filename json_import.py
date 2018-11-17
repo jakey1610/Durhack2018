@@ -1,7 +1,7 @@
 import json 
 from pprint import pprint
 
-with open('/Users/Sami/Desktop/DurHack/test2.json') as x:
+"""with open('/Users/Sami/Desktop/DurHack/test2.json') as x:
 	data = json.load(x)
 
 rtypes = []
@@ -65,7 +65,7 @@ for x in data['entry']:
 			pro['Reason'] = 'N/A'
 		pro['Status'] = x['resource']['status']
 		pro['Date'] = x['resource']['performedDateTime']
-		print(json.dumps(pro))
+		print(json.dumps(pro)) """
 
 def Observation(file):
 	data = json.load(file)
@@ -132,32 +132,36 @@ def mRequest(file): #Medication Request
 	return medreq1
 
 def Goal(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	goa1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
 		goa = {}
-		if y == 'MedicationRequest':
+		if y == 'Goal':
 			goa['Aim'] = x['resource']['description']['text'] #aim - e.g. less intake
-			goa['Progress'] = x['resource']['status'] #progress assessment
+			goa['Progress'] = x['resource']['status'] #progress assessment 
 			json.dumps(goa)
 			goa1.append(goa)
+	print(goa1)
 	return goa1
 
 def Procedure(file):
-	data = json.load(file)
+	data = json.load(open(file))
 	pro1 = []
 	for x in data['entry']:
 		y = x['resource']['resourceType']
 		pro = {}
 		if y == 'Procedure':
-		pro['Type'] = x['resource']['code']['text'] # type of procedure
-		try:
-			pro['Reason'] = x['resource']['reasonReference'][0]['display'] #reason for procedure
-		except KeyError:
-			pro['Reason'] = 'N/A'
-		pro['Status'] = x['resource']['status']
-		pro['Date'] = x['resource']['performedDateTime']
-		json.dumps(pro)
-		pro1.append(pro)
+			pro['Type'] = x['resource']['code']['text'] # type of procedure
+			try:
+				pro['Reason'] = x['resource']['reasonReference'][0]['display'] #reason for procedure
+			except KeyError:
+				pro['Reason'] = 'N/A'
+			pro['Status'] = x['resource']['status']
+			pro['Date'] = x['resource']['performedDateTime']
+			json.dumps(pro)
+			pro1.append(pro)
+	print(pro1)
 	return pro1
+
+Goal('/Users/Sami/Desktop/DurHack/test2.json')
