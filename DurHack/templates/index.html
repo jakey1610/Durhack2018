@@ -32,24 +32,55 @@
         $('patient-accordion').show()
       })
     })
+    //convert basic json key val pairs to view renderable in mustache
+    function jsonToView(jsonData){
+        var keyVals = []
+        for(var k in jsonData){
+          var pair = {}
+          pair["key"] = k
+          pair["val"] = jsonData[k]
+          keyVals.push(pair)
+        }
+        newJson = {"keyvals":keyVals}
+        return newJson
+
+    }
     $(document).ready(function(){
       $('#searchBtn').click(function(){
         $.post('/patientSearch',{hello:"hello"},function(data,status){
         if(status == "success"){
-          jsonData = data[0]
-          //get array of keys
-          var keyVals = []
-          for(var k in jsonData){
-            var pair = {}
-            pair["key"] = k
-            pair["val"] = jsonData[k]
-            keyVals.push(pair)
+          dataTypes = []
+          for (var dataType in data["dict"]){
+              var pair = {}
+              pair["datatype"] = dataType
+              keyValArr = []
+              //console.log(data[dataType])
+              
+              data["dict"][dataType].forEach(function(jsonData){
+                  //console.log(jsonData)
+                  newJson = jsonToView(jsonData)
+                  //console.log(newJson)
+                  keyValArr.push(newJson)
+              })
+              pair["array"] = keyValArr
+              dataTypes.push(pair)
           }
-          newJson = {"keyvals":keyVals}
-          console.log(newJson)
+          var idx = 0;
+          var idx2 = 0
+          epicDataStruct = {"datatypes":dataTypes,"idx": function() {
+          return idx++;
+          },"idx2": function() {
+          return idx2++;
+          }}
+          console.log(data["patient_data"])
+          vitalJson = jsonToView(data["patient_data"])
+          var vTemplate = $("#vital-template").html()
+          var vText = Mustache.render(vTemplate,vitalJson)
+          $('#patients').append(vText)
+
           var template = $("#patient-template").html()
-          var text = Mustache.render(template,newJson)
-          $('#patients').html(text)    
+          var text = Mustache.render(template,epicDataStruct)
+          $('#patients').append(text)    
             }
         else{
             alert("Error: " +status);
@@ -83,31 +114,56 @@
 </div>
 
 {% raw %}
-<!-- the patient data in a mustache js template -->
-<script id = "patient-template" type = "text/template">
-  <div class="panel-group" id="accordion">
+<script id = "vital-template" type = "text/template">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-          Collapsible Group 1</a>
+          <a data-toggle="collapse" href="#collapsev">
+          Patient Info</a>
         </h4>
       </div>
-      <div id="collapse1" class="panel-collapse collapse in">
+      <div id="collapsev" class="panel-collapse collapse in">
         <div class="panel-body">
-          <p>
             <table class = table rules ="all">
               {{#keyvals}}
               <tr>
-              <td>{{key}}</td>
-              <td>{{val}}</td>
+              <td class="col-md-3">{{key}}</td>
+              <td class="col-md-3">{{val}}</td>
               </tr>
               {{/keyvals}}
           </table>
-          </p>
           </div>
       </div>
     </div>
+
+</script>
+<!-- the patient data in a mustache js template -->
+<script id = "patient-template" type = "text/template">
+  <div class="panel-group" id="accordion">
+    {{#datatypes}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{idx}}">
+          {{datatype}}</a>
+        </h4>
+      </div>
+      <div id="collapse{{idx2}}" class="panel-collapse collapse">
+        <div class="panel-body">
+          {{#array}}
+            <table class = table rules ="all">
+              {{#keyvals}}
+              <tr>
+              <td class="col-md-3">{{key}}</td>
+              <td class="col-md-3">{{val}}</td>
+              </tr>
+              {{/keyvals}}
+          </table>
+          {{/array}}
+          </div>
+      </div>
+    </div>
+    {{/datatypes}}
   </div>
 
 </script>
