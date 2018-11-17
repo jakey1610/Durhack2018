@@ -45,9 +45,31 @@
         return newJson
 
     }
+
+    //search for patient
     $(document).ready(function(){
       $('#searchBtn').click(function(){
-        $.post('/patientSearch',{hello:"hello"},function(data,status){
+        $.post('/patientSearch',{searchName:$('#searchText').val()},
+        function(data,status){
+          if(status == "success"){
+            console.log(data)
+            var template = $('#search-template').html()
+            var text = Mustache.render(template,data)
+            $('#patients').append(text)
+            bindPatLink()
+          }
+          else{
+            alert("Error: " +status);
+          }    
+          })
+      })
+    })
+
+    //get a patient's data and show on page
+    //this is horrible code
+    function bindPatLink(){
+      $('.patientLink').click(function(){
+        $.post('/patientData',{filename:$(this).text()},function(data,status){
         if(status == "success"){
           dataTypes = []
           for (var dataType in data["dict"]){
@@ -87,7 +109,7 @@
         }
         })
       })
-    })
+    }
 
 	</script>
   <script src = "https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.0/mustache.js"></script>
@@ -166,6 +188,13 @@
     {{/datatypes}}
   </div>
 
+</script>
+
+<script id = "search-template" type = "text/template">
+<br><br>
+{{#patients}}
+Patient: <a class = "patientLink"> {{name}} </a> <br>
+{{/patients}}
 </script>
 
 {% endraw %}

@@ -1,6 +1,17 @@
 from flask import Flask, render_template, jsonify, request
-
+import os
 from jsonServe import basicInfo,Observation,Encounter,mRequest,Goal,Procedure,cPlan,condition,dReport
+
+
+def search(x):
+	users = [] # All the filenames that include 
+	direc = './patients/'
+	filenames = os.listdir(direc)
+	for name in filenames:
+		if x in name:
+			users.append(name[:-5])
+	return users
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -9,10 +20,20 @@ def home():
 
 @app.route('/patientSearch',methods = ['POST'])
 def patientSearch():	
-	searchText = request.values
+	searchText = request.form.get('searchName')
+	patients = search(searchText)
+	userJson = {}
+	array = []
+	for p in patients:
+		array.append({"name":p})
+	userJson["patients"] = array
+	return jsonify(userJson)
+@app.route('/patientData',methods = ['POST'])
+def patientData():
 	data = {}
 	dict = {}
-	filename = "Abbott701_Veronika555_74.json"
+	fn = request.form.get("filename")
+	filename = "./patients/" + fn.strip() + '.json'
 	dict["observations"] = Observation(filename)
 	dict["encounters"] = Encounter(filename)
 	dict["medication_requests"] = mRequest(filename)
