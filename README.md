@@ -16,7 +16,7 @@ Running instructions:
 
 Create a new folder "patients" inside the "durhack" directory.
 
-Add a dataset of .json files in the FHIR format inside patients
+Add a dataset of .json files in the FHIR format inside patients (link: https://files.slack.com/files-pri/T942CKUM6-FE683EX8S/download/fhir.7z)
 
 run server.py
 
