@@ -3,6 +3,8 @@ import os
 from jsonServe import basicInfo,Observation,Encounter,mRequest,Goal,Procedure,cPlan,condition,dReport
 from graph import graphChol, graphSodium, graphCalc
 
+pngs = []
+
 def search(x):
 	users = [] # All the filenames that include 
 	direc = './patients/'
@@ -52,15 +54,21 @@ def analysis():
 	fn = request.values.get("filename")
 	filename = fn.strip() + '.json'
 	#remove previous files
-	for f in ['static/gCol.png','static/gCal.png','static/gSod.png']:
-		if os.path.exists(f):
-			os.remove(f)
-	
+	for item in pngs:
+		if item is not None:
+			os.remove(item)
+	del pngs[:]
 
-	graphChol(filename)
-	graphCalc(filename)
-	graphSodium(filename)
-	return render_template('analysis.html')
+	cholFile = graphChol(filename)
+	calcFile = graphCalc(filename)
+	sodiFile = graphSodium(filename)
+	pngs.extend([
+		cholFile,
+		calcFile,
+		sodiFile,
+	])
+	return render_template('analysis.html', cholFile=cholFile, calcFile=calcFile, sodiFile=sodiFile)
+
 if __name__ == "__main__":
 	app.run(debug=True,host = '127.0.0.1',port = 5000)
 

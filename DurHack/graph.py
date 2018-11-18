@@ -1,9 +1,16 @@
 import json
 import os
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import uuid
+
 dirpath = os.getcwd() + '\\patients\\'
+
+
 def graphChol(person):
 	print("running for: "+ dirpath + person)
+	filename = 'static/' + str(uuid.uuid4()) + '.png'
 	freq = {}
 	xcoords = []
 	ycoords = []
@@ -49,10 +56,12 @@ def graphChol(person):
 
 	
 	plt.bar(xcoords, ycoords, 1/1.5,color="blue")
-	plt.savefig('static/gCol.png')
-	plt.close()
+	plt.savefig(filename)
+	plt.close('all')
+	return filename
 
 def graphSodium(person):
+	filename = 'static/' + str(uuid.uuid4()) + '.png'
 	z= 0
 	freq = {}
 	xcoords = []
@@ -97,10 +106,12 @@ def graphSodium(person):
 	plt.axis([0,xcoords[-1],50,155])
 	plt.xlabel('Cumulative patient count')
 	plt.bar(xcoords, ycoords, 1/1.5,color="red")
-	plt.savefig('static/gSod.png')
-	plt.close()
+	plt.savefig(filename)
+	plt.close('all')
+	return filename
 
 def graphCalc(person):
+	filename = 'static/' + str(uuid.uuid4()) + '.png'
 	freq = {}
 	xcoords = []
 	ycoords = []
@@ -145,5 +156,6 @@ def graphCalc(person):
 	plt.axis([0,xcoords[-1],5,12])
 	plt.xlabel('Cumulative patient count')
 	plt.bar(xcoords, ycoords, 1/1.5,color="green")
-	plt.savefig('static/gCal.png')
-	plt.close()
+	plt.savefig(filename)
+	plt.close('all')
+	return filename
