@@ -8,6 +8,7 @@
     #patients{display: none}
     #searchBar{display:none}
 	</style>
+  <title> Medical Data Web App </title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -128,15 +129,18 @@
     <ul class="nav navbar-nav">
       <li class="active show-home"><a href="#">Home</a></li>
       <li><a href="#" id = "show-patients">Patients</a></li>
+      <li><a href='/analysis'> Analysis </a></li>
     </ul>
    
   </div>
 </nav>
 
-<div id = "homepage-text">
+<div id = "homepage-text" style = "margin:20px">
 
-<h1> This is the homepage </h1>
-
+<h3> Welcome to the site</h3>
+<ul>
+<li> Visit the patients page to search for a patient by name.</li>
+<li> Visit the analysis page to view some visualizations of the medical data.  </li>
 </div>
 
 {% raw %}
@@ -150,7 +154,7 @@
       </div>
       <div id="collapsev" class="panel-collapse collapse in">
         <div class="panel-body">
-            <table class = table rules ="all">
+            <table class = "table table-bordered table-striped" rules ="all">
               {{#keyvals}}
               <tr>
               <td class="col-md-3">{{key}}</td>
@@ -177,7 +181,7 @@
       <div id="collapse{{idx2}}" class="panel-collapse collapse">
         <div class="panel-body">
           {{#array}}
-            <table class = table rules ="all">
+            <table class = "table table-bordered table-striped"rules ="all">
               {{#keyvals}}
               <tr>
               <td class="col-md-3">{{key}}</td>

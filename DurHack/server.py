@@ -8,7 +8,7 @@ def search(x):
 	direc = './patients/'
 	filenames = os.listdir(direc)
 	for name in filenames:
-		if x in name:
+		if x.lower() in name.lower():
 			users.append(name[:-5])
 	return users
 
@@ -46,6 +46,10 @@ def patientData():
 	data["dict"] = dict
 	return jsonify(data)
 
+#renders images that show analysis of our data
+@app.route('/analysis')
+def analysis():
+	return render_template('analysis.html')
 if __name__ == "__main__":
 	app.run(debug=True,host = '127.0.0.1',port = 5000)
 
