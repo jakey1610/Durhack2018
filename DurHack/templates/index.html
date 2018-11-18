@@ -57,11 +57,16 @@
         $.post('/patientSearch',{searchName:$('#searchText').val()},
         function(data,status){
           if(status == "success"){
-            console.log(data)
-            var template = $('#search-template').html()
-            var text = Mustache.render(template,data)
-            $('#patients').html(text)
-            bindPatLink()
+            if(data["patients"].length > 0){
+              console.log(data)
+              var template = $('#search-template').html()
+              var text = Mustache.render(template,data)
+              $('#patients').html(text)
+              bindPatLink()
+            }
+            else{
+              $('#patients').html('<p> No patients found! </p>')
+            }
           }
           else{
             alert("Error: " +status);
@@ -201,10 +206,15 @@
 <script id = "search-template" type = "text/template">
 <br><br>
 <div id = "searchResults">
+<ul>
 {{#patients}}
+<li>
 Patient: <a class = "patientLink"> {{name}} </a> <br>
 {{/patients}}
+</li>
+</ul>
 </div>
+
 </script>
 
 {% endraw %}
