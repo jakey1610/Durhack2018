@@ -6,6 +6,7 @@
 	<style>
 		#patient-accordion{display: none}
     #patients{display: none}
+    #searchBar{display:none}
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -15,6 +16,7 @@
 		$(document).ready(function(){
 			$('#show-patients').click(function(){
 				$('#patients').show()
+        $('#searchBar').show()
         $('patient-accordion').hide()
 				$('#homepage-text').hide()
 			})
@@ -22,6 +24,7 @@
     $(document).ready(function(){
       $('.show-home').click(function(){
         $('#patients').hide()
+        $('#searchBar').hide()
         $('patient-accordion').hide()
         $('#homepage-text').show()
       })
@@ -29,6 +32,7 @@
     $(document).ready(function(){
       $('.patient_request').click(function(){
         $('#patients').hide()
+        $('#searchBar').hide()
         $('patient-accordion').show()
       })
     })
@@ -55,7 +59,7 @@
             console.log(data)
             var template = $('#search-template').html()
             var text = Mustache.render(template,data)
-            $('#patients').append(text)
+            $('#patients').html(text)
             bindPatLink()
           }
           else{
@@ -98,7 +102,7 @@
           vitalJson = jsonToView(data["patient_data"])
           var vTemplate = $("#vital-template").html()
           var vText = Mustache.render(vTemplate,vitalJson)
-          $('#patients').append(vText)
+          $('#patients').html(vText)
 
           var template = $("#patient-template").html()
           var text = Mustache.render(template,epicDataStruct)
@@ -192,15 +196,21 @@
 
 <script id = "search-template" type = "text/template">
 <br><br>
+<div id = "searchResults">
 {{#patients}}
 Patient: <a class = "patientLink"> {{name}} </a> <br>
 {{/patients}}
+</div>
 </script>
 
 {% endraw %}
+
+<div id = "searchBar">
+  <input class = "form-control" type = "search" placeholder = "Patient Search" id = "searchText">
+  <button class ="btn" id = "searchBtn"> Search </button>  
+
+</div>
 <div id = "patients">
-    <input class = "form-control" type = "search" placeholder = "Patient Search" id = "searchText">
-    <button class ="btn" id = "searchBtn"> Search </button>  
 </div>
 
 <div id = "patient-accordion">
