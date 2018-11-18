@@ -166,6 +166,5 @@ def dReport(file):
 			d.append(x['resource']['effectiveDateTime'])
 			d.append(x['resource']['issued'])
 			d1 = {"status": d[0], "document": d[1], "effectiveDateTime": d[2], "issued":d[3]}
-			d1 = json.dumps(d1)
-			dI.append(d)
+			dI.append(d1)
 	return dI

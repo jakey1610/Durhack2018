@@ -41,6 +41,7 @@ def patientData():
 	dict["procedures"] = Procedure(filename)
 	dict["care_plans"] = cPlan(filename)
 	dict["condition"] = condition(filename)
+	dict["diagnostic_report"] = dReport(filename)
 	data["patient_data"] = basicInfo(filename)[0]
 	data["dict"] = dict
 	return jsonify(data)
