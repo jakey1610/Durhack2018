@@ -31,6 +31,8 @@ def graphChol(person):
 			try:
 				if "total cholesterol" in x['resource']['code']['coding'][0]['display'].lower():
 					z = x['resource']['valueQuantity']['value']
+				else:
+					return
 			except KeyError:
 				print("LIFE")
 	plt.annotate(
@@ -75,6 +77,8 @@ def graphSodium(person):
 			try:
 				if "sodium" in x['resource']['code']['coding'][0]['display'].lower():
 					z = x['resource']['valueQuantity']['value']
+				else:
+					return
 			except KeyError:
 				print("LIFE")
 	plt.annotate(
@@ -115,10 +119,14 @@ def graphCalc(person):
 		y = x['resource']['resourceType']
 		if y == 'Observation':
 			try:
+
 				if "calcium" in x['resource']['code']['coding'][0]['display'].lower():
 					z = x['resource']['valueQuantity']['value']
+				else:
+					return
 			except KeyError:
 				print("LIFE")
+
 	plt.annotate(
 	# Label and coordinate
 	'Patient is here', xy=(ycoords.index(z), z), xytext=(ycoords.index(z)-400, z+1.5),
@@ -129,4 +137,4 @@ def graphCalc(person):
 	plt.axis([0,xcoords[-1],5,12])
 	plt.bar(xcoords, ycoords, 1/1.5,color="green")
 	plt.savefig('gCal.png')
-graphCalc("Abbott701_Veronika555_74.json")
+graphChol("Auer866_Dion658_48.json")
