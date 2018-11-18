@@ -54,7 +54,8 @@ def graphChol(person):
 	)
 
 
-	
+		
+	plt.xlabel('Cumulative patient count')
 	plt.bar(xcoords, ycoords, 1/1.5,color="blue")
 	plt.savefig(filename)
 	plt.close('all')
