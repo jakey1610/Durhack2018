@@ -12,4 +12,10 @@ Inside folder "Durhack" is a python web application requiring dependencies:
 
 -numpy
 
-Add a dataset of .json files in the FHIR format in a folder "patients" inside "Durhack", and run server.py in order to run the web application on some data.
+Running instructions:
+
+Create a new folder "patients" inside the "durhack" directory.
+
+Add a dataset of .json files in the FHIR format inside patients
+
+run server.py
