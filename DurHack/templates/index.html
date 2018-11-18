@@ -79,7 +79,7 @@
     //this is horrible code
     function bindPatLink(){
       $('.patientLink').click(function(){
-        $.post('/patientData',{filename:$(this).text()},function(data,status){
+        $.post('/patientData',{filename:$(this).attr("id")},function(data,status){
         if(status == "success"){
           dataTypes = []
           for (var dataType in data["dict"]){
@@ -206,13 +206,23 @@
 <script id = "search-template" type = "text/template">
 <br><br>
 <div id = "searchResults">
-<ul>
+
+<table class = "table table-bordered">
 {{#patients}}
-<li>
-Patient: <a class = "patientLink"> {{name}} </a> <br>
+<tr>
+<td>
+Patient:  {{name}}
+</td>
+<td>
+<a class = "patientLink" id ="{{name}}"" > View Patient Data </a> 
+</td>
+
+<td>
+<a> View Graph Analysis </a> 
+</td>
+</tr>
 {{/patients}}
-</li>
-</ul>
+</table>
 </div>
 
 </script>
