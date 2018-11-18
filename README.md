@@ -5,8 +5,11 @@ Our project took on the issue of the convoluted, yet monolithic, TPP dataset: we
 
 
 Inside folder "Durhack" is a python web application requiring dependencies:
+
 -flask 
+
 -matplotlib 
+
 -numpy
 
 Add a dataset of .json files in the FHIR format in a folder "patients" inside "Durhack", and run server.py in order to run the web application on some data.
