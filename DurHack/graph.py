@@ -5,7 +5,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import uuid
 
-dirpath = os.getcwd() + '\\patients\\'
+dirpath = os.getcwd() + '/patients/'
 
 
 def graphChol(person):

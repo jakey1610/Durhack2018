@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request
 import os
 from jsonServe import basicInfo,Observation,Encounter,mRequest,Goal,Procedure,cPlan,condition,dReport
 from graph import graphChol, graphSodium, graphCalc
+from flags import calcFlags
 
 pngs = []
 
@@ -30,6 +31,8 @@ def patientSearch():
 		array.append({"name":p})
 	userJson["patients"] = array
 	return jsonify(userJson)
+
+
 @app.route('/patientData',methods = ['POST'])
 def patientData():
 	data = {}
@@ -46,6 +49,10 @@ def patientData():
 	dict["Diagnostic Report"] = dReport(filename)
 	data["patient_data"] = basicInfo(filename)[0]
 	data["dict"] = dict
+	patient_flags = calcFlags(fn.strip() + '.json')
+	data["flags"] = {}
+	for i, name in enumerate(["cholesterol", "sodium", "calcium"]):
+		data["flags"][name] = patient_flags[i]
 	return jsonify(data)
 
 #renders images that show analysis of our data
