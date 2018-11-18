@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 import os
 from jsonServe import basicInfo,Observation,Encounter,mRequest,Goal,Procedure,cPlan,condition,dReport
-
+from graph import graphChol, graphSodium, graphCalc
 
 def search(x):
 	users = [] # All the filenames that include 
@@ -49,6 +49,17 @@ def patientData():
 #renders images that show analysis of our data
 @app.route('/analysis')
 def analysis():
+	fn = request.values.get("filename")
+	filename = fn.strip() + '.json'
+	#remove previous files
+	for f in ['static/gCol.png','/static/gCal.png','/static/gSod.png']:
+		if os.path.exists(f):
+			os.remove(f)
+	
+
+	graphChol(filename)
+	graphCalc(filename)
+	graphSodium(filename)
 	return render_template('analysis.html')
 if __name__ == "__main__":
 	app.run(debug=True,host = '127.0.0.1',port = 5000)

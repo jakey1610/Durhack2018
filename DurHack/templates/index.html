@@ -4,7 +4,6 @@
 	<!-- cdns go here -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<style>
-		#patient-accordion{display: none}
     #patients{display: none}
     #searchBar{display:none}
 	</style>
@@ -18,7 +17,6 @@
 			$('#show-patients').click(function(){
 				$('#patients').show()
         $('#searchBar').show()
-        $('patient-accordion').hide()
 				$('#homepage-text').hide()
 			})
 		})
@@ -26,7 +24,6 @@
       $('.show-home').click(function(){
         $('#patients').hide()
         $('#searchBar').hide()
-        $('patient-accordion').hide()
         $('#homepage-text').show()
       })
     })
@@ -34,7 +31,6 @@
       $('.patient_request').click(function(){
         $('#patients').hide()
         $('#searchBar').hide()
-        $('patient-accordion').show()
       })
     })
     //convert basic json key val pairs to view renderable in mustache
@@ -119,6 +115,7 @@
         }
         })
       })
+
     }
 
 	</script>
@@ -214,11 +211,11 @@
 Patient:  {{name}}
 </td>
 <td>
-<a class = "patientLink" id ="{{name}}"" > View Patient Data </a> 
+<a class = "patientLink" id ="{{name}}" > View Patient Data </a> 
 </td>
 
 <td>
-<a> View Graph Analysis </a> 
+<a href = "/analysis?filename={{name}}" target="_blank"  > View Graph Analysis </a> 
 </td>
 </tr>
 {{/patients}}
@@ -237,9 +234,7 @@ Patient:  {{name}}
 <div id = "patients">
 </div>
 
-<div id = "patient-accordion">
-  <a href = '#' class = 'patient_request'> Patient Name </a>
-</div>
+
 </body>
 
 </html>
