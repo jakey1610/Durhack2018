@@ -1,11 +1,7 @@
 import json
 import numpy as np
 import os
-
-def flags(person):
-	#Return the boolean values for each; whether above 98th percentile or below the 2nd percentile for sodium, total cholesterol, and calcium.
-	#flags order is cholesterol, sodium, and calcium
-	flags = [False, False, False]
+def calcPercentiles():
 	chol, sod, cal = [],[],[]
 	for file in os.listdir('C:/Users/Jake Mortimer/Downloads/fhir'):
 		if '.json' in file:
@@ -35,7 +31,12 @@ def flags(person):
 	cala = np.array(cal)
 	cal98 = np.percentile(cala, 98)
 	cal2 = np.percentile(cala, 2)
+	return chol98,chol2, sod98, sod2, cal98, cal2
 
+def flags(person, chol98,chol2,sod98,sod2,cal98,cal2):
+	#Return the boolean values for each; whether above 98th percentile or below the 2nd percentile for sodium, total cholesterol, and calcium.
+	#flags order is cholesterol, sodium, and calcium
+	flags = [False, False, False]
 	data2 = json.load(open('C:/Users/Jake Mortimer/Downloads/fhir/'+person))
 	for x in data2['entry']:
 		y = x['resource']['resourceType']
