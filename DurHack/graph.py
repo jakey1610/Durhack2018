@@ -50,6 +50,7 @@ def graphChol(person):
 	
 	plt.bar(xcoords, ycoords, 1/1.5,color="blue")
 	plt.savefig('static/gCol.png')
+	plt.close()
 
 def graphSodium(person):
 	z= 0
@@ -94,8 +95,10 @@ def graphSodium(person):
 	arrowprops=dict(facecolor='black', shrink=0.05)
 	)
 	plt.axis([0,xcoords[-1],50,155])
+	plt.xlabel('Cumulative patient count')
 	plt.bar(xcoords, ycoords, 1/1.5,color="red")
 	plt.savefig('static/gSod.png')
+	plt.close()
 
 def graphCalc(person):
 	freq = {}
@@ -140,5 +143,7 @@ def graphCalc(person):
 	arrowprops=dict(facecolor='black', shrink=0.05)
 	)
 	plt.axis([0,xcoords[-1],5,12])
+	plt.xlabel('Cumulative patient count')
 	plt.bar(xcoords, ycoords, 1/1.5,color="green")
 	plt.savefig('static/gCal.png')
+	plt.close()

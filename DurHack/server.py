@@ -34,14 +34,14 @@ def patientData():
 	dict = {}
 	fn = request.form.get("filename")
 	filename = "./patients/" + fn.strip() + '.json'
-	dict["observations"] = Observation(filename)
-	dict["encounters"] = Encounter(filename)
-	dict["medication_requests"] = mRequest(filename)
-	dict["goals"] = Goal(filename)
-	dict["procedures"] = Procedure(filename)
-	dict["care_plans"] = cPlan(filename)
-	dict["condition"] = condition(filename)
-	dict["diagnostic_report"] = dReport(filename)
+	dict["Observations"] = Observation(filename)
+	dict["Encounters"] = Encounter(filename)
+	dict["Medication Requests"] = mRequest(filename)
+	dict["Goals"] = Goal(filename)
+	dict["Procedures"] = Procedure(filename)
+	dict["Care Plans"] = cPlan(filename)
+	dict["Condition"] = condition(filename)
+	dict["Diagnostic Report"] = dReport(filename)
 	data["patient_data"] = basicInfo(filename)[0]
 	data["dict"] = dict
 	return jsonify(data)
@@ -52,7 +52,7 @@ def analysis():
 	fn = request.values.get("filename")
 	filename = fn.strip() + '.json'
 	#remove previous files
-	for f in ['static/gCol.png','/static/gCal.png','/static/gSod.png']:
+	for f in ['static/gCol.png','static/gCal.png','static/gSod.png']:
 		if os.path.exists(f):
 			os.remove(f)
 	
