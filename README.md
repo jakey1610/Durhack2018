@@ -19,3 +19,6 @@ Create a new folder "patients" inside the "durhack" directory.
 Add a dataset of .json files in the FHIR format inside patients
 
 run server.py
+
+
+If we had more time, we would have considered deploying our application using a service such as AWS or Google Cloud
